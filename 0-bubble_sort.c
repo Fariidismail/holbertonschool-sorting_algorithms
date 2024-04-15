@@ -9,25 +9,25 @@
 
 void bubble_sort(int *array, size_t size)
 {
-    bool isSwapped;
-    int i, temp, iterator;
+	bool isSwapped;
+	int i, temp, iterator;
 
-    if (array == NULL || size == 0)
-        return;
-    do {
-        isSwapped = false;
-        i = 0;
-        for (iterator = size - 1; i < iterator; i++)
-        {
-            if (array[i + 1] < array[i])
-            {
-                temp = array[i];
-                array[i] = array[i + 1];
-                array[i + 1] = temp;
-                isSwapped = true;
-                print_array(array, size);
-            }
-        }
-        iterator--;
-    } while (isSwapped);
+	if (array == NULL || size == 0)
+		return;
+	do {
+		isSwapped = false;
+		i = 0;
+		for (iterator = size - 1; i < iterator; i++)
+		{
+			if (array[i + 1] < array[i])
+			{
+				temp = array[i];
+				array[i] = array[i + 1];
+				array[i + 1] = temp;
+				isSwapped = true;
+				print_array(array, size);
+			}
+		}
+		iterator--;
+	} while (isSwapped);
 }
