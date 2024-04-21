@@ -36,22 +36,17 @@ int div(int *array, size_t size, int back, int end)
 	for (above = below = back; below < end; below++)
 	{
 		if (array[below] < *pvt)
+		{		if (above < below)
 		{
-			if (above < below)
-			{
 				swap(array + below, array + above);
-				print_array(array, size);
-			}
+				print_array(array, size);			}
 			above++;
-		}
 	}
-
-	if (array[above] > *pvt)
+	}	if (array[above] > *pvt)
 	{
 		swap(array + above, pvt);
-		print_array(array, size);
+	print_array(array, size);
 	}
-
 	return (above);
 }
 
@@ -67,11 +62,10 @@ int div(int *array, size_t size, int back, int end)
 void sort(int *array, size_t size, int back, int end)
 {
 	int a;
-
 	if (end > back)
-	{
-		a = div(array, size, back, end);
+	{	a = div(array, size, back, end);
 		sort(array, size, back, a - 1);
+		sort(array, size, a + 1, end);
 	}
 }
 
@@ -85,7 +79,6 @@ void sort(int *array, size_t size, int back, int end)
  */
 void quick_sort(int *array, size_t size)
 {
-	if (array == NULL || size < 2)
-		return;
-	sort(array, size, , size - 1);
+	if (array == NULL || size < 2)		return;
+	sort(array, size, 0, size - 1);
 }
