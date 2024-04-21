@@ -1,93 +1,89 @@
 #include "sort.h"
 
-void swap(int *x, int *y);
-int div(int *array, size_t size, int back, int end);
-void sort(int *array, size_t size, int back, int end);
-
 /**
- * swap - swap two integers in array
- * @x: first integer to swap
- * @y: second integer to swap
- */
-void swap(int *x, int *y)
+ * _swap - swap two numbers.
+ * @a: integer
+ * @b: integer
+ **/
+
+void _swap(int *a, int *b)
 {
 	int tmp;
 
-	tmp = *x;
-	*x = *y;
-	*y = tmp;
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+
 }
 
 /**
- * div - order a subset.
- *
- * @array: The array of integers.
- * @size: The size of the array.
- * @back: The starting index of the subset to order.
- * @end: The ending index of the subset to order.
- *
- * Return: The final partition index.
- */
-int div(int *array, size_t size, int back, int end)
+ * _split - Split the array and takes the last element as pivot
+ * @arr: Array
+ * @min: first element
+ * @last: The last element
+ * @size: size
+ * Return: integer
+ **/
+int _split(int *arr, int min, int last, size_t size)
 {
-	int *pvt, above, below;
+	int piv;
+	int i = (min);
+	int j;
 
-	pvt = array + end;
-	for (above = below = back; below < end; below++)
+	piv = arr[last];
+	for (j = min; j < last; j++)
 	{
-		if (array[below] < *pvt)
+		if (arr[j] <= piv)
 		{
-			if (above < below)
-			{
-				swap(array + below, array + above);
-				print_array(array, size);
-			}
-			above++;
+
+			_swap(&arr[i], &arr[j]);
+
+
+			if (i != j)
+				print_array(arr, size);
+
+			i++;
+
 		}
 	}
 
-	if (array[above] > *pvt)
-	{
-		swap(array + above, pvt);
-		print_array(array, size);
-	}
+	_swap(&arr[i], &arr[last]);
+	if (i != j)
+		print_array(arr, size);
 
-	return (above);
+	return (i);
 }
 
 /**
- * sort - Implement the quicksort algorithm through recursion.
- * @array: An array of integers to sort.
- * @size: The size of the array.
- * @back: The starting index of the array partition to order.
- * @end: The ending index of the array partition to order.
- *
- * Description: uses the Lomuto partition scheme
+ * quick_sort_array - quick_sort_array
+ * @arr: arr
+ * @min: min
+ * @last: last
+ * @size: size
+ * Return: Nothing
  */
-void sort(int *array, size_t size, int back, int end)
+void quick_sort_array(int *arr, int min, int last, size_t size)
 {
-	int a;
 
-	if (end > back)
+	int piv;
+
+	if (min < last)
 	{
-		a = div(array, size, back, end);
-		sort(array, size, back, a - 1);
-		sort(array, size, a + 1, end);
+		piv = _split(arr, min, last, size);
+		quick_sort_array(arr, min, (piv - 1), size);
+		quick_sort_array(arr, (piv + 1), last, size);
 	}
 }
 
 /**
- * quick_sort - Sort an array of integers in ascending
- *              order using the quicksort algorithm
- * @array: array of integers
- * @size: size of the array
- *
- * Description: prints the array after each swap of two elements
- */
+ * quick_sort -Sort an array using quick_sort algorithm
+ * @array: array
+ * @size: size
+ **/
 void quick_sort(int *array, size_t size)
 {
-	if (array == NULL || size < 2)
+	if (size < 2)
 		return;
 
-	sort(array, size, 0, size - 1);
+	quick_sort_array(array, 0, size - 1, size);
 }
